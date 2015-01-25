@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//LOGGER" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration>
+	<appender name="fileLog" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<param name="file" value="${catalina.base}/logs/admin.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %5p %c{1}:%L - %m%n" />
+		</layout>
+	</appender>
+	<appender name="stdlog" class="org.apache.log4j.ConsoleAppender">
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<!-- <param name="file" value="${catalina.base}/logs/admin.log" /> -->
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %5p %c{1}:%L - %m%n" />
+		</layout>
+	</appender>
+
+	<logger name="org.apache.commons.httpclient.HttpMethodBase">
+		<level value="error" />
+	</logger>
+	<logger name="org.springframework.">
+		<level value="debug" />
+	</logger>
+	<logger name="PERFORMACE">
+		<level value="warn" />
+		<appender-ref ref="perfLog" />
+	</logger>
+	<root>
+		<priority value="debug" />
+		<appender-ref ref="stdlog" />
+	</root>
+</log4j:configuration>
