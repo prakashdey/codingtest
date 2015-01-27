@@ -32,9 +32,6 @@ public class AdminController implements AdminURLConstants {
     @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public ModelAndView landingPage() {
-
-        LOGGER.debug("inside AdminController");
-
         ModelAndView modelAndView = new ModelAndView(LANDING_PAGE);
         return modelAndView;
     }
