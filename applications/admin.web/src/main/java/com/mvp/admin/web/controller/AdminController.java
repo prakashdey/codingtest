@@ -29,7 +29,7 @@ public class AdminController implements AdminURLConstants {
      * 
      * @return {@link ModelAndView} to admin page.
      */
-    @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public ModelAndView landingPage() {
         ModelAndView modelAndView = new ModelAndView(LANDING_PAGE);
