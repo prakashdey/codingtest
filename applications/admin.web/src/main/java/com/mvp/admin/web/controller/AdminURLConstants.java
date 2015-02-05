@@ -12,6 +12,6 @@ package com.mvp.admin.web.controller;
 public interface AdminURLConstants {
 
     // Admin Controllers URL's
-    String LANDING_PAGE = "admin/home";
+	String LANDING_PAGE = "home";
 
 }
