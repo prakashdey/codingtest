@@ -3,11 +3,11 @@ package com.snapdeal.objectstore.impl;
 import com.snapdeal.objectstore.api.IObjectStore;
 
 /**
- * Implementation of IObjectStore.
+ * Implementation of IObjectStore api.
  * 
  * @author pdey
  */
-public class ConcurrentObjectStore implements IObjectStore {
+public class ObjectStoreImpl implements IObjectStore {
 
 	private StorageProcessorService inMemoryCacheStorage = new StorageProcessorService();
 

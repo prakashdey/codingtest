@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.snapdeal.objectstore.api.IObjectStore;
-import com.snapdeal.objectstore.impl.ConcurrentObjectStore;
+import com.snapdeal.objectstore.impl.ObjectStoreImpl;
 
 public class ObjectStoreTest {
 
@@ -19,7 +19,7 @@ public class ObjectStoreTest {
 
 	@Before
 	public void setup() {
-		os = new ConcurrentObjectStore();
+		os = new ObjectStoreImpl();
 	}
 
 	@Test
@@ -52,7 +52,7 @@ public class ObjectStoreTest {
 			if (x % 50 == 0) {
 				System.out.println("Called bg process");
 				Thread.currentThread().sleep(500);
-				((ConcurrentObjectStore) os).bgProcess();
+				((ObjectStoreImpl) os).bgProcess();
 			}
 		}
 
