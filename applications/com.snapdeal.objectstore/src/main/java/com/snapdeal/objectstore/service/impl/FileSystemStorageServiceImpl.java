@@ -153,7 +153,7 @@ public class FileSystemStorageServiceImpl implements IFileSystemStorageService {
     public byte[] read(String iEncodedKey) {
         String fileName = getFileName(iEncodedKey);
         byte[] data = null;
-        try (FileInputStream fin = new FileInputStream(iEncodedKey);) {
+        try (FileInputStream fin = new FileInputStream(fileName);) {
             data = IOUtils.toByteArray(fin);
         } catch (IOException e) {
             LOGGER.log(Level.WARNING, "File not found for file name" + fileName);

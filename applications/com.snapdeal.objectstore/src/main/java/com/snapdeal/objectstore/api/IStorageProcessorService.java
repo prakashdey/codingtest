@@ -27,4 +27,6 @@ public interface IStorageProcessorService {
      */
     boolean delete(long id);
 
+    void process();
+
 }

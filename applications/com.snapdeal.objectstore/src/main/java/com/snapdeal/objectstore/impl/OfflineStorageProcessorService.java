@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.logging.Logger;
 
+import com.snapdeal.objectstore.api.IStorageProcessorService;
 import com.snapdeal.objectstore.cache.CacheManager;
 import com.snapdeal.objectstore.cache.EhCacheManagerImpl;
 import com.snapdeal.objectstore.dto.DataBean;
@@ -32,11 +33,11 @@ import com.snapdeal.objectstore.utility.BlobToDataTransformer;
  * @author pdey
  *
  */
-public class StorageProcessorService {
+public class OfflineStorageProcessorService implements IStorageProcessorService {
 
-    private static final Logger LOGGER = Logger.getLogger(StorageProcessorService.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(OfflineStorageProcessorService.class.getName());
 
-    public StorageProcessorService() {
+    public OfflineStorageProcessorService() {
     }
 
 
@@ -58,7 +59,8 @@ public class StorageProcessorService {
      * @param data
      * @return
      */
-    public long store(byte[] data) {
+    @Override
+    public long put(byte[] data) {
 
         DataBean dataBean = BlobToDataTransformer.getInstance().transform(data);
         MetaData metadata = metaDataForEntry(dataBean);
@@ -106,11 +108,13 @@ public class StorageProcessorService {
      * 
      * @param id
      */
-    public void remove(long id) {
+    @Override
+    public boolean delete(long id) {
 
         DataBean dataBean = new DataBean();
         dataBean.setId(id);
-        firstCache.replace(id, metaDataForDelete(dataBean));
+        MetaData oldData = firstCache.replace(id, metaDataForDelete(dataBean));
+        return oldData != null;
     }
 
     /**
@@ -132,7 +136,8 @@ public class StorageProcessorService {
      * @param id
      * @return
      */
-    public byte[] findAndReturn(long id) {
+    @Override
+    public byte[] get(long id) {
         MetaData metaData = firstCache.get(id);
         DataBean dataBean = null;
         // check if the data is ready for deletion, if not proceed to fetch from

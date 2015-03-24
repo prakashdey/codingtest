@@ -10,6 +10,7 @@ import net.sf.ehcache.util.concurrent.ConcurrentHashMap;
 import com.snapdeal.objectstore.api.IStorageProcessorService;
 import com.snapdeal.objectstore.dto.MetaData;
 import com.snapdeal.objectstore.service.IFileSystemStorageService;
+import com.snapdeal.objectstore.service.impl.FileSystemStorageServiceImpl;
 import com.snapdeal.objectstore.service.impl.IDGenerator;
 import com.snapdeal.objectstore.utility.HashGenerator;
 
@@ -18,7 +19,7 @@ public class InlineStorageProcessorService implements IStorageProcessorService {
     private ConcurrentMap<Long, MetaData> lookupMap = new ConcurrentHashMap<Long, MetaData>();
     private ConcurrentMap<MetaData, AtomicLong> fileReference = new ConcurrentHashMap<MetaData, AtomicLong>();
 
-    private IFileSystemStorageService fileSystemStorageServiceilesystem;
+    private IFileSystemStorageService fileSystemStorageServiceilesystem = new FileSystemStorageServiceImpl();
 
     /**
      * This method is used to reload all the metadata from file system.
@@ -95,6 +96,12 @@ public class InlineStorageProcessorService implements IStorageProcessorService {
         public void run() {
             // storageProcessorService.
         }
+    }
+
+    @Override
+    public void process() {
+        // TODO Auto-generated method stub
+
     }
 
 }

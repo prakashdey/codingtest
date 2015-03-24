@@ -53,5 +53,6 @@ public final class ConfigurationConstants {
         String FOLDER_LOCATION = "object.file.location";
         String INSTANT_SYNC = "filestore.instantstore";
         String CACHE_IMPLEMENTATION = "cache.implementation";
+        String STORAGE_SERVICE_IMPLEMENTATION = "storage.service.impl";
     }
 }
