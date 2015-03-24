@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -16,6 +17,7 @@ import com.snapdeal.objectstore.impl.ObjectStoreImpl;
 public class ObjectStoreTest {
 
     private static IObjectStore os;
+    private AtomicInteger i = new AtomicInteger(1000);
 
     @BeforeClass
     public static void setup() {
@@ -75,9 +77,10 @@ public class ObjectStoreTest {
 
     @Test
     public void testGet() {
-        long id = 786l;
+        long id = 20;
         byte[] data = os.get(id);
-        System.out.println(new String(data));
+        String expected = "String " + 1020;
+        Assert.assertArrayEquals(expected.getBytes(), data);
     }
 
     @Test
@@ -86,7 +89,7 @@ public class ObjectStoreTest {
     }
 
     private byte[] getBytes() {
-        UUID uuid = UUID.randomUUID();
-        return uuid.toString().getBytes();
+        String uuid = "String " + i.getAndIncrement();
+        return uuid.getBytes();
     }
 }
