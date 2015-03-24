@@ -10,10 +10,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 import com.snapdeal.objectstore.common.ConfigurationConstants;
 import com.snapdeal.objectstore.common.ConfigurationConstants.ConfigurationConstantKeys;
 import com.snapdeal.objectstore.dto.DataBean;
+import com.snapdeal.objectstore.service.IFileSystemStorageService;
 
 /**
  * This is an utility file processing file for file operations.
@@ -21,9 +23,9 @@ import com.snapdeal.objectstore.dto.DataBean;
  * @author pdey
  *
  */
-public class FileSystemObjectStorage {
+public class FileSystemStorageServiceImpl implements IFileSystemStorageService {
 
-    private static final Logger LOGGER = Logger.getLogger(FileSystemObjectStorage.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(FileSystemStorageServiceImpl.class.getName());
 
     private static String FOLDER_LOCATION = ConfigurationConstants.getProperty(ConfigurationConstantKeys.FOLDER_LOCATION);
 
@@ -54,7 +56,7 @@ public class FileSystemObjectStorage {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public DataBean read(String encodedKey) throws IOException, ClassNotFoundException {
+    public DataBean reads(String encodedKey) throws IOException, ClassNotFoundException {
         String fileName = getFileName(encodedKey);
 
         try (FileInputStream fin = new FileInputStream(fileName);
@@ -110,7 +112,7 @@ public class FileSystemObjectStorage {
      * 
      * @param id
      */
-    public boolean delete(String id) {
+    public boolean deletes(String id) {
         File file = new File(getFileName(id));
         try {
             FileUtils.forceDelete(file);
@@ -145,5 +147,47 @@ public class FileSystemObjectStorage {
      */
     private String getFileName(long id) {
         return new String(FOLDER_LOCATION + "storage" + id + ".ser");
+    }
+
+    @Override
+    public byte[] read(String iEncodedKey) {
+        String fileName = getFileName(iEncodedKey);
+        byte[] data = null;
+        try (FileInputStream fin = new FileInputStream(iEncodedKey);) {
+            data = IOUtils.toByteArray(fin);
+        } catch (IOException e) {
+            LOGGER.log(Level.WARNING, "File not found for file name" + fileName);
+        }
+        return data;
+    }
+
+    @Override
+    public boolean write(byte[] iData, String iEncodedKey) {
+
+        String fileName = getFileName(iEncodedKey);
+        boolean successWrite = false;
+        try (FileOutputStream fout = new FileOutputStream(fileName, false);) {
+            IOUtils.write(iData, fout);
+            successWrite = true;
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Couldn't write data into " + fileName);
+        }
+        return successWrite;
+    }
+
+    @Override
+    public boolean delete(String iEncodedKey) {
+        String fileName = getFileName(iEncodedKey);
+        File file = new File(fileName);
+        boolean successFileDeleted = false;
+        if (null != file && file.exists() && !file.isDirectory()) {
+            try {
+                FileUtils.forceDelete(file);
+                successFileDeleted = true;
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "File not deleted :" + fileName);
+            }
+        }
+        return successFileDeleted;
     }
 }

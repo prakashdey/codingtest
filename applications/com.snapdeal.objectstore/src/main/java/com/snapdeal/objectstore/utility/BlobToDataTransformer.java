@@ -1,6 +1,7 @@
 package com.snapdeal.objectstore.utility;
 
 import com.snapdeal.objectstore.dto.DataBean;
+import com.snapdeal.objectstore.service.impl.IDGenerator;
 
 /**
  * This is an utility to create DataBean from blob data.

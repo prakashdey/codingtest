@@ -52,5 +52,6 @@ public final class ConfigurationConstants {
     public static interface ConfigurationConstantKeys {
         String FOLDER_LOCATION = "object.file.location";
         String INSTANT_SYNC = "filestore.instantstore";
+        String CACHE_IMPLEMENTATION = "cache.implementation";
     }
 }

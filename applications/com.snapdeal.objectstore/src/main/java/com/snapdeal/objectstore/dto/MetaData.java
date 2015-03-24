@@ -1,5 +1,7 @@
 package com.snapdeal.objectstore.dto;
 
+import java.io.Serializable;
+
 /**
  * This class holds metadata related to blob data. This information will be used
  * for read/write operations of data on disk.
@@ -7,7 +9,9 @@ package com.snapdeal.objectstore.dto;
  * @author pdey
  */
 
-public class MetaData {
+public class MetaData implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     public MetaData(boolean delete, long inMemoryId, boolean inMemory) {
         this.delete = delete;
@@ -22,7 +26,7 @@ public class MetaData {
     // flag used to check if the data is in memory or file-system
     private boolean inMemory;
     // This is the computed key for each blob.
-    private String key;
+    private String hashKey;
 
     public boolean isDelete() {
         return delete;
@@ -46,6 +50,30 @@ public class MetaData {
 
     public void setInMemory(boolean inMemory) {
         this.inMemory = inMemory;
+    }
+
+    public String getHashKey() {
+        return hashKey;
+    }
+
+    public void setHashKey(String iHashKey) {
+        hashKey = iHashKey;
+    }
+
+    @Override
+    public boolean equals(Object iObj) {
+        if (null == iObj || !(iObj instanceof MetaData)) {
+            return false;
+        }
+        if (null != hashKey && null != ((MetaData) iObj).getHashKey() && hashKey.equals(((MetaData) iObj).getHashKey())) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return null != hashKey ? hashKey.hashCode() : 0;
     }
 
 }

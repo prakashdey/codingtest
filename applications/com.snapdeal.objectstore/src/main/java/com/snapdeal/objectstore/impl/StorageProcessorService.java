@@ -13,7 +13,7 @@ import com.snapdeal.objectstore.cache.CacheManager;
 import com.snapdeal.objectstore.cache.EhCacheManagerImpl;
 import com.snapdeal.objectstore.dto.DataBean;
 import com.snapdeal.objectstore.dto.MetaData;
-import com.snapdeal.objectstore.service.impl.FileSystemObjectStorage;
+import com.snapdeal.objectstore.service.impl.FileSystemStorageServiceImpl;
 import com.snapdeal.objectstore.utility.BlobToDataTransformer;
 
 /**
@@ -143,7 +143,7 @@ public class StorageProcessorService {
             } else {
                 // TODO: Fetch from file system, test this flow.
                 try {
-                    FileSystemObjectStorage fs = new FileSystemObjectStorage();
+                    FileSystemStorageServiceImpl fs = new FileSystemStorageServiceImpl();
                     dataBean = fs.read(id);
                 } catch (ClassNotFoundException e) {
                     // TODO Auto-generated catch block
@@ -174,7 +174,7 @@ public class StorageProcessorService {
      */
     public synchronized void process() {
 
-        FileSystemObjectStorage fs = new FileSystemObjectStorage();
+        FileSystemStorageServiceImpl fs = new FileSystemStorageServiceImpl();
         // List contains all the deleted entry that needs to be deleted from
         // first cache.
         List<Long> listOfDeletedData = new LinkedList<Long>();

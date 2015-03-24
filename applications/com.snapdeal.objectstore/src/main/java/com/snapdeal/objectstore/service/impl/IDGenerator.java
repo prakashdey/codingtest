@@ -1,4 +1,4 @@
-package com.snapdeal.objectstore.utility;
+package com.snapdeal.objectstore.service.impl;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

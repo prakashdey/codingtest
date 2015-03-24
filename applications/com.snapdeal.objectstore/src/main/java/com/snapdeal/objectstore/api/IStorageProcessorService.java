@@ -1,6 +1,5 @@
 package com.snapdeal.objectstore.api;
 
-import com.snapdeal.objectstore.dto.DataBean;
 
 public interface IStorageProcessorService {
 
@@ -10,7 +9,7 @@ public interface IStorageProcessorService {
      * @param blob
      * @return id
      */
-    long put(DataBean data);
+    long put(byte[] data);
 
     /**
      * Retrieve the contents of an object identified by �id�. NULL if doesn�t
@@ -19,7 +18,7 @@ public interface IStorageProcessorService {
      * @param id
      * @return
      */
-    DataBean get(long id);
+    byte[] get(long id);
 
     /**
      * Delete an object identified by �id�

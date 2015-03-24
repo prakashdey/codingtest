@@ -8,21 +8,27 @@ package com.snapdeal.objectstore.cache;
  * @param <K>
  * @param <V>
  */
-public class CacheManagerFactory<K, V> {
+public class CacheManagerFactory {
 
-	private static boolean useHashMap = false;
+    private static boolean useHashMap = false;
 
-	public CacheManager<K, V> getCacheManager() {
-		CacheManager<K, V> cacheManager = null;
-		if (useHashMap) {
-		} else {
+    public <K, V> CacheManager<K, V> getCacheManager(String configFile) {
+        CacheManager<K, V> cacheManager = null;
+        if (useHashMap) {
+            // TODO: yet to implement.
+        } else {
+            cacheManager = new EhCacheManagerImpl<K, V>(configFile);
+        }
+        return cacheManager;
+    }
 
-			cacheManager = new EhCacheManagerImpl<K, V>();
-		}
-		return cacheManager;
-	}
-
-	// private static CacheManagerFactory uniqueInstance = new
-	// CacheManagerFactory<K, V>();
-
+    public <K, V> CacheManager<K, V> getCacheManager() {
+        CacheManager<K, V> cacheManager = null;
+        if (useHashMap) {
+            // TODO: yet to implement.
+        } else {
+            cacheManager = new EhCacheManagerImpl<K, V>();
+        }
+        return cacheManager;
+    }
 }
